@@ -1,7 +1,9 @@
 import React from "react";
+import { Link, Navigate, Outlet } from "react-router-dom";
 
 export const Landing = () => {
   const handleRegister = () => {
+    return <Navigate to="/SignUp" />;
     console.log("Register button clicked");
   };
 
@@ -27,6 +29,7 @@ export const Landing = () => {
         Olives & Herbs
       </header>
 
+      <Outlet />
       <nav
         style={{
           display: "flex",
@@ -35,12 +38,12 @@ export const Landing = () => {
           marginTop: "1rem",
         }}
       >
-        <a href="#" style={{ marginRight: "1rem", color: "white" }}>
+        <Link to="#" style={{ marginRight: "1rem", color: "white" }}>
           Explore
-        </a>
-        <a href="#" style={{ color: "white" }}>
+        </Link>
+        <Link to="/SignIn" style={{ color: "white" }}>
           Sign in
-        </a>
+        </Link>
       </nav>
 
       <div style={{ display: "flex", flex: 1 }}>
@@ -62,9 +65,9 @@ export const Landing = () => {
             </p>
           </div>
 
-          <button onClick={() => handleRegister()} style={{ color: "white" }}>
+          <Link to="/SignUp" style={{ color: "white" }}>
             Register
-          </button>
+          </Link>
         </main>
 
         <div
