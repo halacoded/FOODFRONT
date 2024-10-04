@@ -1,106 +1,32 @@
 import React from "react";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 export const Landing = () => {
-  const linkStyle = {
-    color: "white",
-    textDecoration: "none",
-    transition: "text-decoration 0.3s ease",
-  };
-
-  const hoverStyle = {
-    textDecoration: "underline",
-  };
-
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-        backgroundColor: "#344E41",
-        color: "white",
-        fontFamily: "'Telugu MN', sans-serif",
-      }}
-    >
-      <header
-        style={{
-          padding: "1rem 2rem",
-          fontSize: "1.5rem",
-          fontWeight: "bold",
-          textAlign: "left",
-        }}
-      >
+    <div className="flex flex-col min-h-screen bg-olive text-white font-telugu">
+      <header className="p-4 text-2xl font-bold text-left">
         Olives & Herbs
       </header>
 
       <Outlet />
-      <nav
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          padding: "1rem 1rem 1rem",
-          marginTop: "1rem",
-        }}
-      >
-        <Link to="#" style={{ marginRight: "1rem", color: "white" }}>
+      <nav className="flex justify-start p-4 mt-4">
+        <Link to="/home" className="mr-4 text-white hover:underline">
           Explore
         </Link>
-        <Link to="/SignIn" style={{ color: "white" }}>
+        <Link to="/SignIn" className="text-white hover:underline">
           Sign in
         </Link>
       </nav>
 
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          maxWidth: "1400px",
-          margin: "0 auto",
-        }}
-      >
-        <main
-          style={{
-            flex: "0 0 50%",
-            padding: "2rem",
-            paddingLeft: "4rem",
-            paddingTop: "8rem",
-            paddingRight: "2rem",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
+      <div className="flex flex-1 max-w-7xl mx-auto">
+        <main className="flex-1 p-8 pl-16 pt-32 pr-8 flex flex-col justify-between">
           <div>
-            <h1
-              style={{
-                fontFamily: "'Telugu MN', sans-serif",
-                marginBottom: "1.5rem",
-                fontSize: "2.5rem",
-              }}
-            >
-              Welcome to Olives & Herbs!
-            </h1>
-            <h2
-              style={{
-                fontFamily: "'Telugu MN', sans-serif",
-                marginBottom: "2.5rem",
-                fontSize: "1.6rem",
-              }}
-            >
+            <h1 className="mb-6 text-4xl">Welcome to Olives & Herbs!</h1>
+            <h2 className="mb-10 text-2xl">
               Inspired by Nature, Made for You.
             </h2>
 
-            <p
-              style={{
-                fontFamily: "'Telugu MN', sans-serif",
-                lineHeight: "1.4",
-                letterSpacing: "0.01em",
-                maxWidth: "80%",
-                marginBottom: "2rem",
-                fontSize: "1.32em", // Increased font size by 2%
-              }}
-            >
+            <p className="leading-relaxed tracking-wide max-w-4/5 mb-8 text-lg">
               Nature-Inspired Recipes, Made from Scratch. Explore a variety of
               wholesome, tried-and-true recipes for every season, special
               occasion, and celebration. Whether you're seeking to elevate your
@@ -109,75 +35,39 @@ export const Landing = () => {
             </p>
           </div>
 
-          <Link to="/SignUp" style={{ color: "white", marginTop: "2rem" }}>
+          <Link to="/SignUp" className="text-white mt-8 hover:underline">
             Register
           </Link>
         </main>
 
-        <div
-          style={{
-            flex: "0 0 50%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center", // Changed from flex-end to center
-            paddingRight: "4rem",
-            paddingBottom: "5rem", // Added padding to the bottom
-          }}
-        >
+        <div className="flex-1 flex justify-center items-center pr-16 pb-20">
           <img
             src="https://i.pinimg.com/564x/30/d4/42/30d44233f5e6601ff119bb9a70c0092e.jpg"
             alt="Olives & Herbs"
-            style={{
-              width: "60%",
-              height: "auto",
-              maxHeight: "70vh", // Reduced from 80vh to 70vh
-              objectFit: "cover",
-              borderRadius: "20px",
-              opacity: 0.95,
-            }}
+            className="w-3/5 h-auto max-h-[70vh] object-cover rounded-3xl opacity-95"
           />
         </div>
       </div>
 
-      <footer
-        style={{
-          padding: "0.75rem 1.5rem",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "0.8rem", // Slightly reduced font size
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "28%", // Slightly reduced
-            maxWidth: "380px", // Slightly reduced
-          }}
-        >
+      <footer className="py-3 px-6 flex justify-center items-center text-sm">
+        <div className="flex justify-between items-center w-1/3 max-w-md">
           <div>&copy; 2024-2025 Olives & Thyme.</div>
-          <div style={{ display: "flex" }}>
+          <div className="flex">
             <Link
               to="/about"
-              style={linkStyle}
-              onMouseEnter={(e) => Object.assign(e.target.style, hoverStyle)}
-              onMouseLeave={(e) => Object.assign(e.target.style, linkStyle)}
+              className="text-white no-underline hover:underline transition-all duration-300"
             >
               About
             </Link>
-            <span style={{ margin: "0 0.5rem" }}></span>
+            <span className="mx-2"></span>
             <Link
               to="/terms"
-              style={linkStyle}
-              onMouseEnter={(e) => Object.assign(e.target.style, hoverStyle)}
-              onMouseLeave={(e) => Object.assign(e.target.style, linkStyle)}
+              className="text-white no-underline hover:underline transition-all duration-300"
             >
               Terms
             </Link>
           </div>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
+          <div className="flex gap-2">
             {/* Placeholder for social media icons */}
             <span>FB</span>
             <span>TW</span>

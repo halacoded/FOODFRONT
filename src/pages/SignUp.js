@@ -1,114 +1,61 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "../fonts.css";
+import React, { useState, useContext, useEffect } from "react";
+import { register } from "../api/auth";
+import { useMutation } from "@tanstack/react-query";
+import { UserContext } from "../context/UserContext";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
-  const [fileName, setFileName] = useState("No file chosen");
+  const [userInfo, setUserInfo] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [user, setUser] = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const commonStyles = {
-    fontFamily: "'Telugu MN', sans-serif",
-    color: "#344E41",
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
+
+  const { mutate } = useMutation({
+    mutationKey: ["register"],
+    mutationFn: (userInfo) => register(userInfo),
+    onSuccess: (data) => {
+      setUser(true);
+      // No need to navigate here, the useEffect will handle it
+    },
+    onError: (error) => {
+      console.error("Registration error:", error);
+      // Handle error (e.g., show error message to user)
+    },
+  });
+
+  const handleChange = (e) => {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
-  const inputStyles = {
-    ...commonStyles,
-    width: "100%",
-    padding: "10px",
-    borderRadius: "4px",
-    border: "1px solid #D3D3D3",
-    backgroundColor: "#FFFFFF",
-    marginBottom: "15px",
-    textAlign: "left",
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    console.log("Submitting userInfo:", userInfo);
+    mutate(userInfo);
   };
 
-  const fileInputStyles = {
-    ...commonStyles,
-    display: "inline-block",
-    padding: "8px 12px",
-    cursor: "pointer",
-    backgroundColor: "#DAD7CD",
-    color: "#344E41",
-    borderRadius: "4px",
-    border: "1px solid #D3D3D3",
-    fontSize: "14px",
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setFileName(file ? file.name : "No file chosen");
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
+  // Remove the if (user) check here, as it's handled by useEffect
 
   return (
-    <div
-      style={{
-        backgroundColor: "#344E41",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        padding: "20px",
-      }}
-    >
-      <Link
-        to="/"
-        style={{
-          textDecoration: "none",
-        }}
-      >
-        <h1
-          style={{
-            fontFamily: "'Telugu MN', sans-serif",
-            fontSize: "24px",
-            marginBottom: "20px",
-            alignSelf: "flex-start",
-            color: "#FFFFFF",
-            cursor: "pointer",
-          }}
-        >
-          Olives & Herbs
-        </h1>
+    <div className="bg-olive min-h-screen flex flex-col p-5">
+      <Link to="/" className="text-white text-2xl mb-5 self-start">
+        Olives & Herbs
       </Link>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flex: 1,
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "#FFFFFF",
-            borderRadius: "8px",
-            padding: "30px",
-            width: "100%",
-            maxWidth: "400px",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <h2
-            style={{
-              ...commonStyles,
-              marginBottom: "20px",
-              textAlign: "center",
-            }}
-          >
-            Register
-          </h2>
+      <div className="flex justify-center items-center flex-1">
+        <div className="bg-white rounded-lg p-8 w-full max-w-md shadow-lg flex flex-col items-center">
+          <h2 className="text-olive text-2xl mb-5 text-center">Register</h2>
           <form
-            onSubmit={handleSubmit}
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
+            className="w-full flex flex-col items-center"
+            onSubmit={handleFormSubmit}
           >
             <input
               type="text"
@@ -116,7 +63,8 @@ export const SignUp = () => {
               name="username"
               placeholder="Username"
               required
-              style={inputStyles}
+              className="w-full p-3 rounded border border-gray-300 mb-4 text-left"
+              onChange={handleChange}
             />
             <input
               type="email"
@@ -124,7 +72,8 @@ export const SignUp = () => {
               name="email"
               placeholder="Email"
               required
-              style={inputStyles}
+              className="w-full p-3 rounded border border-gray-300 mb-4 text-left"
+              onChange={handleChange}
             />
             <input
               type="password"
@@ -132,7 +81,8 @@ export const SignUp = () => {
               name="password"
               placeholder="Password"
               required
-              style={inputStyles}
+              className="w-full p-3 rounded border border-gray-300 mb-4 text-left"
+              onChange={handleChange}
             />
             <input
               type="password"
@@ -140,72 +90,18 @@ export const SignUp = () => {
               name="confirmPassword"
               placeholder="Confirm Password"
               required
-              style={inputStyles}
+              className="w-full p-3 rounded border border-gray-300 mb-4 text-left"
+              onChange={handleChange}
             />
-            <div
-              style={{
-                width: "100%",
-                textAlign: "center",
-                marginBottom: "15px",
-              }}
-            >
-              <label htmlFor="profileImage" style={fileInputStyles}>
-                Choose File
-              </label>
-              <input
-                type="file"
-                id="profileImage"
-                name="profileImage"
-                accept="image/*"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-              <div
-                style={{
-                  marginTop: "5px",
-                  fontSize: "12px",
-                  color: "#344E41",
-                  opacity: 0.7,
-                }}
-              >
-                {fileName}
-              </div>
-            </div>
-            <p
-              style={{
-                ...commonStyles,
-                fontSize: "14px",
-                margin: "15px 0",
-                textAlign: "center",
-              }}
-            >
+            <p className="text-olive text-sm mb-4 text-center">
               Already have an account?{" "}
-              <Link
-                to="/SignIn"
-                style={{
-                  ...commonStyles,
-                  color: "#A3B18A",
-                  textDecoration: "none",
-                }}
-              >
+              <Link to="/SignIn" className="text-olive-light no-underline">
                 Sign In
               </Link>
             </p>
             <button
               type="submit"
-              style={{
-                ...commonStyles,
-                width: "100%",
-                padding: "10px",
-                backgroundColor: "#2D4A38",
-                color: "#FFFFFF",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "16px",
-                marginTop: "10px",
-                textAlign: "center",
-              }}
+              className="w-full p-3 bg-olive text-white border-none rounded cursor-pointer text-base mt-2 text-center"
             >
               Register
             </button>

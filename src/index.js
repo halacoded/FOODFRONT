@@ -20,18 +20,18 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Landing />,
+    element: <App />,
     children: [
-      { path: "home", element: <Home /> },
-      { path: "recipes", element: <Recipes /> },
-
-      { path: "account", element: <Account /> },
-      { path: "recipe/:id", element: <RecipeDetail /> },
+      { path: "/", element: <Landing /> },
+      { path: "/home", element: <Home /> },
+      { path: "/recipes", element: <Recipes /> },
+      { path: "/account/:id", element: <Account /> },
+      { path: "/recipe/:id", element: <RecipeDetail /> },
+      { path: "/profile", element: <Profile /> },
+      { path: "/signin", element: <SignIn /> },
+      { path: "/signup", element: <SignUp /> },
     ],
   },
-  { path: "/profile", element: <Profile /> },
-  { path: "/SignIn", element: <SignIn /> },
-  { path: "/SignUp", element: <SignUp /> },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
