@@ -1,11 +1,18 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import { FaUser } from "react-icons/fa"; // Import both options
 
 export const Landing = () => {
   return (
     <div className="flex flex-col min-h-screen bg-olive text-white font-telugu">
-      <header className="p-4 text-2xl font-bold text-left">
-        Olives & Herbs
+      <header className="p-4 flex justify-between items-start">
+        <div className="text-2xl font-bold">Olives & Herbs</div>
+        <Link
+          to="/profile"
+          className="text-white hover:text-gray-300 mt-4 mr-6" // Changed to positive margin-right
+        >
+          <FaUser size={28} />
+        </Link>
       </header>
 
       <Outlet />
@@ -13,13 +20,13 @@ export const Landing = () => {
         <Link to="/home" className="mr-4 text-white hover:underline">
           Explore
         </Link>
-        <Link to="/SignIn" className="text-white hover:underline">
+        <Link to="/SignIn" className="mr-4 text-white hover:underline">
           Sign in
         </Link>
       </nav>
 
       <div className="flex flex-1 max-w-7xl mx-auto">
-        <main className="flex-1 p-8 pl-16 pt-32 pr-8 flex flex-col justify-between">
+        <main className="flex-1 p-8 pt-32 flex flex-col justify-between">
           <div>
             <h1 className="mb-6 text-4xl">Welcome to Olives & Herbs!</h1>
             <h2 className="mb-10 text-2xl">
@@ -28,7 +35,7 @@ export const Landing = () => {
 
             <p className="leading-relaxed tracking-wide max-w-4/5 mb-8 text-lg">
               Nature-Inspired Recipes, Made from Scratch. Explore a variety of
-              wholesome, tried-and-true recipes for every season, special
+              wholesome, tried-and-true recipes for every season, special¥¥
               occasion, and celebration. Whether you're seeking to elevate your
               cooking skills or looking for a simple, reliable recipe, you've
               found your place in the kitchen.
@@ -39,14 +46,6 @@ export const Landing = () => {
             Register
           </Link>
         </main>
-
-        <div className="flex-1 flex justify-center items-center pr-16 pb-20">
-          <img
-            src="https://i.pinimg.com/564x/30/d4/42/30d44233f5e6601ff119bb9a70c0092e.jpg"
-            alt="Olives & Herbs"
-            className="w-3/5 h-auto max-h-[70vh] object-cover rounded-3xl opacity-95"
-          />
-        </div>
       </div>
 
       <footer className="py-3 px-6 flex justify-center items-center text-sm">
