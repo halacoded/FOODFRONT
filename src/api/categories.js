@@ -2,13 +2,23 @@ import instance from ".";
 
 const getAllCategories = async () => {
   try {
-    const { data } = await instance.get("/categorys");
+    const { data } = await instance.get("/categories");
     return data; // The backend directly returns the array of categories
   } catch (error) {
-    console.error(
-      "Error fetching all categories:",
-      error.response?.data || error.message
-    );
+    console.error("Error fetching categories:", error);
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error("Data:", error.response.data);
+      console.error("Status:", error.response.status);
+      console.error("Headers:", error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error("No response received:", error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error("Error setting up request:", error.message);
+    }
     throw error;
   }
 };

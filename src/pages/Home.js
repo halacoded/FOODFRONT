@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllRecipes } from "../api/recipes";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import { logout } from "../api/storage";
+import { logout } from "../api/auth";
 
 export const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");

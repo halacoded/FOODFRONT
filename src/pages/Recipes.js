@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getAllRecipes } from "../api/recipes";
+import RecipeModal from "../pages/RecipeModal";
 
 const NavItem = ({ title, content }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -31,22 +34,28 @@ const NavItem = ({ title, content }) => {
 
 export const Recipes = () => {
   const navigate = useNavigate();
-  const [userRecipes, setUserRecipes] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [editingRecipe, setEditingRecipe] = useState(null);
 
-  useEffect(() => {
-    // Fetch user recipes here (placeholder)
-    const fetchUserRecipes = async () => {
-      // Simulating API call
-      const response = await fetch("/api/user-recipes");
-      const data = await response.json();
-      setUserRecipes(data);
-    };
+  const {
+    data: userRecipes,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["recipes"],
+    queryFn: getAllRecipes,
+  });
 
-    fetchUserRecipes();
-  }, []);
+  const handleCreateRecipe = () => {
+    setEditingRecipe(null);
+    setShowModal(true);
+  };
 
   const handleEditRecipe = (recipeId) => {
-    navigate(`/edit-recipe/${recipeId}`);
+    const recipeToEdit = userRecipes.find((recipe) => recipe.id === recipeId);
+    setEditingRecipe(recipeToEdit);
+    setShowModal(true);
   };
 
   return (
@@ -119,7 +128,7 @@ export const Recipes = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mt-12">
         <button
           className="rounded-lg p-6 shadow-md w-full h-64 flex items-center justify-center transition-all hover:bg-opacity-90 bg-white"
-          onClick={() => navigate("/create-recipe")}
+          onClick={handleCreateRecipe}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -136,32 +145,45 @@ export const Recipes = () => {
             />
           </svg>
         </button>
-        {userRecipes.map((recipe) => (
-          <div
-            key={recipe.id}
-            className="bg-white rounded-lg p-6 shadow-md w-full h-64 relative"
-          >
-            <h3 className="text-olive text-xl font-bold mb-2">
-              {recipe.title}
-            </h3>
-            <p className="text-olive-dark">{recipe.description}</p>
-            <button
-              onClick={() => handleEditRecipe(recipe.id)}
-              className="absolute bottom-4 right-4 bg-olive text-white p-2 rounded-full hover:bg-olive-dark transition-colors"
-              aria-label="Edit recipe"
+        {userRecipes &&
+          userRecipes.map((recipe) => (
+            <div
+              key={recipe.id}
+              className="bg-white rounded-lg p-6 shadow-md w-full h-64 relative"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+              <h3 className="text-olive text-xl font-bold mb-2">
+                {recipe.title}
+              </h3>
+              <p className="text-olive-dark">{recipe.description}</p>
+              <button
+                onClick={() => handleEditRecipe(recipe.id)}
+                className="absolute bottom-4 right-4 bg-olive text-white p-2 rounded-full hover:bg-olive-dark transition-colors"
+                aria-label="Edit recipe"
               >
-                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-              </svg>
-            </button>
-          </div>
-        ))}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+              </button>
+            </div>
+          ))}
       </div>
+      {isLoading && <p>Loading recipes...</p>}
+      {error && <p className="text-red-500">{error.message}</p>}
+
+      <RecipeModal
+        show={showModal}
+        onClose={() => {
+          setShowModal(false);
+          setEditingRecipe(null);
+        }}
+        recipe={editingRecipe}
+        refetch={refetch}
+      />
     </div>
   );
 };

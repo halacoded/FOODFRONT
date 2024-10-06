@@ -28,7 +28,7 @@ const getOneRecipe = async (id) => {
 const createRecipe = async (recipeInfo) => {
   try {
     const { data } = await instance.post("/recipes", recipeInfo);
-    return data; // The backend returns the newly created recipe
+    return data;
   } catch (error) {
     console.error(
       "Error creating recipe:",
