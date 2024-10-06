@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import { FaUser } from "react-icons/fa"; // Import both options
+import { FaUser } from "react-icons/fa";
 
 export const Landing = () => {
   return (
@@ -9,7 +9,7 @@ export const Landing = () => {
         <div className="text-2xl font-bold">Olives & Herbs</div>
         <Link
           to="/profile"
-          className="text-white hover:text-gray-300 mt-4 mr-6" // Changed to positive margin-right
+          className="text-white hover:text-gray-300 mt-4 mr-6"
         >
           <FaUser size={28} />
         </Link>
@@ -34,11 +34,11 @@ export const Landing = () => {
             </h2>
 
             <p className="leading-relaxed tracking-wide max-w-4/5 mb-8 text-lg">
-              Nature-Inspired Recipes, Made from Scratch. Explore a variety of
-              wholesome, tried-and-true recipes for every season, special¥¥
-              occasion, and celebration. Whether you're seeking to elevate your
-              cooking skills or looking for a simple, reliable recipe, you've
-              found your place in the kitchen.
+              Nature-Inspired Arabic Recipes, Made from Scratch. Explore a
+              variety of wholesome, authentic Middle Eastern dishes for every
+              season, special occasion, and celebration. Whether you're looking
+              to elevate your cooking skills or seeking a simple, traditional
+              recipe, you've found your place in the kitchen.
             </p>
           </div>
 

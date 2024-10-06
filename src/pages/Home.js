@@ -40,63 +40,66 @@ export const Home = () => {
     : [];
 
   return (
-    <div className="bg-olive min-h-screen flex flex-col p-5 text-white">
-      <header className="flex justify-between items-center mb-6">
-        <div className="flex items-center">
-          <button
-            onClick={() => navigate("/")}
-            className="text-white hover:text-olive-light transition-colors mr-4"
-            aria-label="Return to Landing Page"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
-            </svg>
-          </button>
-          <h1 className="text-3xl font-bold">Welcome to Your Home Page</h1>
+    <div className="bg-olive-dark min-h-screen p-8 text-white rounded-3xl">
+      <header className="flex justify-between items-center mb-8">
+        <nav className="flex space-x-6 text-lg">
+          <a href="#" className="font-semibold border-b-2 border-white">
+            Popular
+          </a>
+          <a href="#" className="hover:text-olive-light">
+            Our Recs
+          </a>
+          <a href="#" className="hover:text-olive-light">
+            Breakfast
+          </a>
+          <a href="#" className="hover:text-olive-light">
+            More
+          </a>
+        </nav>
+        <div className="flex items-center space-x-4">
+          <input
+            type="text"
+            placeholder="Search"
+            className="bg-olive-light bg-opacity-30 px-4 py-2 rounded-full text-white placeholder-white"
+          />
+          <a href="#" className="hover:underline">
+            Log out
+          </a>
+          <div className="w-8 h-8 bg-white rounded-full"></div>
         </div>
-        <button
-          onClick={user ? handleSignOut : handleSignIn}
-          className="bg-white text-olive px-4 py-2 rounded hover:bg-olive-light hover:text-white transition-colors"
-        >
-          {user ? "Sign Out" : "Sign In"}
-        </button>
       </header>
-      <input
-        type="text"
-        placeholder="Search recipes..."
-        className="w-full p-2 mb-4 border rounded text-black"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      {isLoading && <p>Loading recipes...</p>}
-      {error && <p>Error loading recipes: {error.message}</p>}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredRecipes.map((recipe) => (
-          <div
-            key={recipe._id}
-            className="border rounded-lg p-4 shadow-md cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-olive-dark hover:shadow-lg"
-            onClick={() => handleRecipeClick(recipe._id)}
-          >
-            <h2 className="text-xl font-semibold mb-2 transition-colors duration-300 ease-in-out hover:text-yellow-300">
-              {recipe.name}
-            </h2>
-            {recipe.user && (
-              <p className="text-sm mb-2">Created by: {recipe.user.username}</p>
-            )}
+
+      <main className="grid grid-cols-3 gap-8">
+        <div className="col-span-2 grid grid-cols-2 gap-8">
+          <div className="bg-white rounded-xl overflow-hidden h-64">
+            <img
+              src="/path-to-hummus-image.jpg"
+              alt="Hummus plate"
+              className="w-full h-full object-cover"
+            />
           </div>
-        ))}
-      </div>
+          <div className="bg-white rounded-xl overflow-hidden h-64">
+            <img
+              src="/path-to-salad-image.jpg"
+              alt="Salad plate"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="bg-olive-light bg-opacity-30 rounded-xl h-64"></div>
+          <div className="bg-olive-light bg-opacity-30 rounded-xl h-64"></div>
+        </div>
+        <div className="bg-olive-light bg-opacity-30 rounded-xl p-6">
+          <h2 className="text-xl mb-4">No recipes? Create your own!</h2>
+          <input
+            type="text"
+            placeholder="Recipe name"
+            className="w-full bg-white bg-opacity-20 px-4 py-2 rounded-full text-white placeholder-white mb-4"
+          />
+          <button className="bg-white text-olive-dark px-6 py-2 rounded-full hover:bg-opacity-90">
+            Create
+          </button>
+        </div>
+      </main>
     </div>
   );
 };
